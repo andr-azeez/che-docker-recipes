@@ -1,0 +1,50 @@
+apiVersion: 1.0.0
+metadata:
+  name: angular-kazow
+projects:
+  - name: angular-realworld-example-app
+    source:
+      location: 'https://github.com/gothinkster/angular-realworld-example-app'
+      type: git
+components:
+  - id: che-incubator/typescript/latest
+    type: chePlugin
+  - mountSources: true
+    endpoints:
+      - name: angular
+        port: 4200
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 1Gi
+    type: dockerimage
+    image: 'docker.io/andrazeez/docknode14:latest'
+    alias: nodejs
+commands:
+  - name: yarn install
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/angular-realworld-example-app'
+        type: exec
+        command: yarn install
+        component: nodejs
+  - name: build
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/angular-realworld-example-app'
+        type: exec
+        command: yarn run build
+        component: nodejs
+  - name: start
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/angular-realworld-example-app'
+        type: exec
+        command: yarn run start --host 0.0.0.0 --disableHostCheck true
+        component: nodejs
+  - name: lint
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/angular-realworld-example-app'
+        type: exec
+        command: yarn run lint
+        component: nodejs
+
