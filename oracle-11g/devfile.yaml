@@ -1,0 +1,24 @@
+apiVersion: 1.0.0
+metadata:
+  name: oracle-11g-k3lq4
+projects:
+  - name: crud-php
+    source:
+      location: 'https://github.com/andr-azeez/oracle-11g.git'
+      type: git
+components:
+  - mountSources: true
+    endpoints:
+      - attributes:
+          discoverable: 'true'
+        name: db
+        port: 1521
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 1024Mi
+    type: dockerimage
+    image: 'docker.io/oracleinanutshell/oracle-xe-11g:latest'
+    alias: oracle-11g
