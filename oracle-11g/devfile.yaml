@@ -2,7 +2,7 @@ apiVersion: 1.0.0
 metadata:
   generateName: oracle-11g-
 projects:
-  - name: crud-php
+  - name: oracle11g-db
     source:
       location: 'https://github.com/andr-azeez/oracle-11g.git'
       type: git
