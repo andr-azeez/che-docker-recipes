@@ -1,6 +1,6 @@
 apiVersion: 1.0.0
 metadata:
-  name: oracle-11g-k3lq4
+  generateName: oracle-11g-
 projects:
   - name: crud-php
     source:
