@@ -18,7 +18,10 @@ components:
     args:
       - /dev/null
       - '-f'
-    memoryLimit: 1024Mi
+    memoryLimit: 4024Mi
     type: dockerimage
-    image: 'docker.io/oracleinanutshell/oracle-xe-11g:latest'
+    volumes:
+      - name: oracle
+        containerPath: /u01/app/oracle/
+    image: 'docker.io/andrazeez/ora:latest'
     alias: oracle-11g
