@@ -17,10 +17,18 @@ components:
       - attributes:
           public: 'false'
         name: debug
-        port: 3003
-      - name: 8080-tcp
+        port: 5005
+      - attributes:
+          public: 'false'
+        name: mysql
+        port: 3306
+      - attributes:
+          public: 'false'
+        name: int
+        port: 8005
+      - name: tomcat-8080-tcp
         port: 8080
-      - name: 80-tcp
+      - name: phpmyadmin
         port: 80
     command:
       - tail
