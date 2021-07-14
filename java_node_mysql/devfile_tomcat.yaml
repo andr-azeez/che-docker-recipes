@@ -1,0 +1,59 @@
+apiVersion: 1.0.0
+metadata:
+  generateName: jvmvn-tomcat-
+projects:
+  - name: console-java-simple
+    source:
+      location: 'https://github.com/andr-azeez/proj-java-mvn.git'
+      type: git
+      branch: java1.11
+components:
+  - id: redhat/java/latest
+    preferences:
+      java.server.launchMode: Standard
+    type: chePlugin
+  - mountSources: true
+    endpoints:
+      - attributes:
+          public: 'false'
+        name: debug
+        port: 3003
+      - name: 8080-tcp
+        port: 8080
+      - name: 80-tcp
+        port: 80
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 512Mi
+    type: dockerimage
+    volumes:
+      - name: m2
+        containerPath: /home/user/.m2
+    image: 'docker.io/andrazeez/java_mysql:v3'
+    alias: maven
+    env:
+      - value: ''
+        name: MAVEN_CONFIG
+      - value: '-XX:MaxRAMPercentage=50 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/user'
+        name: MAVEN_OPTS
+      - value: '-XX:MaxRAMPercentage=50 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom'
+        name: JAVA_OPTS
+      - value: '-XX:MaxRAMPercentage=50 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom'
+        name: JAVA_TOOL_OPTIONS
+commands:
+  - name: maven build
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/console-java-simple'
+        type: exec
+        command: mvn clean install
+        component: maven
+  - name: maven build and run
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/console-java-simple'
+        type: exec
+        command: mvn clean install && java -jar ./target/*.jar
+        component: maven
+
