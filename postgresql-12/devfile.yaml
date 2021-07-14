@@ -1,0 +1,53 @@
+apiVersion: 1.0.0
+metadata:
+  generateName: psql-
+projects:
+  - name: psql-data
+    source:
+      location: 'https://github.com/andr-azeez/postgresql-12.git'
+      type: git
+components:
+  - mountSources: true
+    endpoints:
+      - name: PGAdmin
+        port: 80
+      - attributes:
+          discoverable: 'true'
+          public: 'false'
+        name: db
+        port: 5432
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 2024Mi
+    type: dockerimage
+    volumes:
+      - name: pgadmin
+        containerPath: /var/lib/pgadmin
+      - name: postgresql
+        containerPath: /var/lib/postgresql/12/main
+    image: 'docker.io/andrazeez/custom_psql:v12'
+    alias: postgres
+commands:
+  - name: Start Postgres
+    actions:
+      - type: exec
+        command: service postgresql start
+        component: postgres
+  - name: Stop Postgres
+    actions:
+      - type: exec
+        command: service postgresql stop
+        component: postgres
+  - name: Start PGAdmin
+    actions:
+      - type: exec
+        command: service apache2 start
+        component: postgres
+  - name: Stop PGAdmin
+    actions:
+      - type: exec
+        command: service apache2 stop
+        component: postgres
