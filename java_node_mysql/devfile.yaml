@@ -1,0 +1,38 @@
+apiVersion: 1.0.0
+metadata:
+  name: java_node_mysql
+projects:
+  - name: jv-mysql
+    source:
+      location: 'https://github.com/taniarascia/pdo.git'
+      type: git
+components:
+  - mountSources: true
+    endpoints:
+      - name: PhpMyadmin
+        port: 80
+      - attributes:
+          discoverable: 'true'
+          public: 'false'
+        name: db
+        port: 3306
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 1028Mi
+    type: dockerimage
+    image: 'andrazeez/java_mysql:v2'
+    alias: jvmysql
+commands:
+  - name: Start PhpMyadmin
+    actions:
+      - type: exec
+        command: service apache2 start
+        component: jvmysql
+  - name: Stop PhpMyadmin
+    actions:
+      - type: exec
+        command: service apache2 stop
+        component: jvmysql
