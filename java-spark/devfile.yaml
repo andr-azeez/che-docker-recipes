@@ -7,6 +7,8 @@ projects:
       location: 'https://github.com/andr-azeez/lab-apache-spark.git'
       type: git
 components:
+  - type: chePlugin
+    id: scalameta/metals/latest
   - mountSources: true
     endpoints:
       - attributes:
