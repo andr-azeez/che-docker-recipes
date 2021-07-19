@@ -1,0 +1,25 @@
+apiVersion: 1.0.0
+metadata:
+  generateName: apache-spark-
+projects:
+  - name: apache-spark
+    source:
+      location: 'https://github.com/andr-azeez/lab-apache-spark.git'
+      type: git
+components:
+  - mountSources: true
+    endpoints:
+      - attributes:
+          discoverable: 'true'
+          public: 'false'
+        name: db
+        port: 5432
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 512Mi
+    type: dockerimage
+    image: 'docker.io/andrazeez/apache_spark:v1'
+    alias: spark
