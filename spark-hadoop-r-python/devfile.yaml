@@ -1,0 +1,29 @@
+apiVersion: 1.0.0
+metadata:
+  generateName: sp-hdp-r-pyt-
+projects:
+  - name: apache-spark
+    source:
+      location: 'https://github.com/andr-azeez/lab-spark-hadoop-R-python.git'
+      type: git
+components:
+  - type: chePlugin
+    id: ms-python/python/latest
+  - id: scalameta/metals/latest
+    type: chePlugin
+  - mountSources: true
+    endpoints:
+      - attributes:
+          discoverable: 'true'
+          public: 'false'
+        name: db
+        port: 5432
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 512Mi
+    type: dockerimage
+    image: 'docker.io/andrazeez/apache_spark:v1'
+    alias: spark
