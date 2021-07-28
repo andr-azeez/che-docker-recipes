@@ -25,5 +25,5 @@ components:
       - '-f'
     memoryLimit: 512Mi
     type: dockerimage
-    image: 'docker.io/andrazeez/apache_spark:v1'
+    image: 'docker.io/andrazeez/spark_hadoop_r_py:v1'
     alias: spark
