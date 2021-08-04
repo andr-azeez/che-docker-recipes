@@ -1,0 +1,19 @@
+apiVersion: 1.0.0
+metadata:
+  name: keycloak-user-reg
+projects:
+  - name: keycloak-user-reg
+    source:
+      location: 'https://github.com/andr-azeez/keycloak-import-users.git'
+      type: git
+components:
+  - mountSources: true
+    command:
+      - tail
+    args:
+      - /dev/null
+      - '-f'
+    memoryLimit: 256Mi
+    type: dockerimage
+    image: 'docker.io/library/ubuntu:18.04'
+    alias: ubuntu
