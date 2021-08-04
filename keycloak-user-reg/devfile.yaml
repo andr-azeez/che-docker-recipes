@@ -15,5 +15,5 @@ components:
       - '-f'
     memoryLimit: 256Mi
     type: dockerimage
-    image: 'docker.io/library/ubuntu:18.04'
+    image: 'docker.io/andrazeez/keycloak-user-reg:v1'
     alias: ubuntu
